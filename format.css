@@ -53,12 +53,27 @@ body {
     background: -webkit-linear-gradient(top, #7DED6C 10%,#20A90C 90%);
 }
 
+.item-grid{
+	width: 10%;
+	height: 10%;
+	background: #000;
+	display: inline-block;
+	margin: 1px;
+}
+	
+
+
 #game-panel {
-	width: 80%;
-	height: 90%;
-    border: 5px solid gray;
+	width: 82%;
+	height: 93%;
     margin: 5px 2px 1px 15px;
+	padding: 8px;
 	position: absolute;
+	background: #2c4368;
+	opacity: 0.8;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 }
 
 
