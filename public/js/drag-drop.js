@@ -1,92 +1,100 @@
-var f_x, f_y;
-// target elements with the "draggable" class
-interact('.draggable')
-  .draggable({
-    // enable inertial throwing
-    inertia: true,
-    // keep the element within the area of it's parent
-   restrict: {
-      restriction: "parent",
-      endOnly: true,
-      elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-    },
-    // enable autoScroll
-    autoScroll: true,
+var mouseDown = false;
+var x_initial, y_initial;
+var bool_move = true;
+var stay = false;
 
-    // call this function on every dragmove event
-    onmove: dragMoveListener,
-    // call this function on every dragend event
-    onend: function (event) {
-       var target = event.target,
-        // keep the dragged position in the data-x/data-y attributes
-        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-        
-        console.log('final: ',f_x, f_y);
-      
-      var textEl = event.target.querySelector('p');
-      textEl && (textEl.textContent =
-                'moved a distance of '+ (Math.sqrt(event.dx * event.dx + event.dy * event.dy)|0) + 'px');
-    }
-  });
+var original_cx, original_cy;
+var new_cx, new_cy;
 
+function final_move(target, x, y, item){
+    target.style.webkitTransform = target.style.transform =
+                    'translate(' + x + 'px, ' + y + 'px)';
+    target.setAttribute('cx', original_cx + x);
+    target.setAttribute('cy', original_cy + y);
+    new_cx = original_cx + x;
+    new_cy = original_cy + y;
+    console.log('im x 50');
+    stay = false;
+    item.mousemove(undefined);
+}
 
-  function dragMoveListener (event) { 
-    var target = event.target,
-        // keep the dragged position in the data-x/data-y attributes
-        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+function move_circle(target, x, y, item){    
+    target.style.webkitTransform =
+    target.style.transform =
+    'translate(' + x + 'px, ' + y + 'px)';    
     
-      
-    /*Allow the item only can move along a or y axis*/
-    if(Math.abs(event.dx) > Math.abs(event.dy)){
-        target.style.webkitTransform =
-        target.style.transform =
-        'translate(' + x + 'px, ' + 0 + 'px)';
-        target.setAttribute('data-x', x);
-        target.setAttribute('data-y', 0);
-    }
+    var width_range = parseFloat($("rect").attr("width"));
+    var height_range = parseFloat($("rect").attr("height"));
     
-    if(Math.abs(event.dx) < Math.abs(event.dy)){
-        target.style.webkitTransform =
-        target.style.transform =
-        'translate(' + 0 + 'px, ' + y + 'px)';
-        target.setAttribute('data-y', y);
-        target.setAttribute('data-x', 0);
+    console.log('width_range, ', width_range);
+    
+     /*Position will be changed if x or y exceed a range*/   
+    if(x > (width_range/2)){
+        final_move(target, width_range, 0, item);
+    }else if(x < (0 - width_range/2)){
+        final_move(target, 0-width_range, 0, item);
+    }else if(y > height_range/2){
+        final_move(target, 0, height_range, item);
+    }else if(y < (0 - height_range/2)){
+        final_move(target, 0, 0 - height_range, item);
+    }else{
+        stay = true;
     } 
-       
-    
-    /*Position will be changed if x or y exceed a range*/
-    if(x > 50){
-        target.setAttribute('cx', 500-x);
-        target.setAttribute('cy', 400);
+}
+
+function stop_move(event){
+    if(!mouseDown)
+        return;
+    console.log('mouse up');
+    mouseDown = false;
+    bool_move = true;
+    x_initial = 0;
+    y_initial = 0;
+    var target = event.target;
+    if(stay === true){
+        console.log("im stay!");
+        target.style.webkitTransform = target.style.transform =
+             'translate(' + 0 + 'px, ' + 0 + 'px)';
+        target.setAttribute('cx', original_cx);
+        target.setAttribute('cy', original_cy);
     }
-    if(x < -50){
-        target.setAttribute('cx', 300-x);
-        target.setAttribute('cy', 400);
-    }
+    if(stay === false){
+        console.log("im not stay!");
+        target.style.webkitTransform = target.style.transform =
+             'translate(' + 0 + 'px, ' + 0 + 'px)';
+        target.setAttribute('cx', new_cx);
+        target.setAttribute('cy', new_cy);
+    }   
+    mouseDown = false;
+}
+
+
+$(document).ready(function(){
     
-    if(y > 50){
-        target.setAttribute('cx', 400);
-        target.setAttribute('cy', 500-y);
-    }
-    if(y < -50){
-        target.setAttribute('cx', 400);
-        target.setAttribute('cy', 300-y);
-    }  
-    
-    
-    console.log(x,y);
-    f_x = x;
-    f_y = y;
-  }
-    
-    
+    $('.draggable').mousedown(function(event){
+            mouseDown = true;
+            x_initial = event.pageX;
+            y_initial = event.pageY;
+            original_cx = parseFloat(event.target.getAttribute('cx'));
+            original_cy = parseFloat(event.target.getAttribute('cy'));
+            $(this).mousemove(function(event){  
+                var item = $(this);
+                if(mouseDown){
+                    console.log('im down!!!!');
+                    var target = event.target;
+                    var x_distance = event.pageX - x_initial;
+                    var y_distance = event.pageY - y_initial;
+                    console.log(parseFloat(event.target.getAttribute('cx')), parseFloat(event.target.getAttribute('cy')));
 
-  // this is used later in the resizing and gesture demos
-  window.dragMoveListener = dragMoveListener;
+                    if(Math.abs(x_distance) > Math.abs(y_distance))
+                        move_circle(target, x_distance, 0, item); 
+                    if(Math.abs(x_distance) < Math.abs(y_distance))
+                        move_circle(target, 0, y_distance, item); 
+                }
+            });
 
+        });
 
-
-
-
+        $('.draggable').mouseup(stop_move);
+        $('.draggable').mouseleave(stop_move);
+});
