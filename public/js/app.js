@@ -19,6 +19,8 @@ function drawGrid(panel){
     var h = panel.innerHeight();
     var w = panel.innerWidth();
     
+    console.log(w, h);
+    
     var svg = $(makeSVG(w, h));
     
     var rect_h = h/10;
@@ -52,15 +54,12 @@ function drawGrid(panel){
 }
 
 
-$(document).ready(function(){
-    var $item = $("<div class = 'item-grid'></div>");
-    $("#start-btn").click(function(){
-        $(this).hide();
-        var p = $("#game-panel");
+// $(document).ready(function(){
+//     var $item = $("<div class = 'item-grid'></div>");
+//     $("#start-btn").click(function(){
+//         $(this).hide();
+//         var p = $("#game-panel");
 //         drawGrid(p);
-//         $("#game-btns").show();
-
-        $("#cir").draggable();
-    });    
+//     });    
     
-});
+// });
