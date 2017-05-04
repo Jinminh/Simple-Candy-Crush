@@ -73,7 +73,7 @@ function makeRectangle(x, y, w, h, c){
 * 
 * @return {object} 
 */
-function makeCircle(x, y, r, c){
+function makeCircle(x, y, r, c, pos_x, pos_y, color_num){
     var circ = document.createElementNS(SVGNameSpace, "circle"); 
   
     // set the attributes for the circle object.
@@ -81,6 +81,9 @@ function makeCircle(x, y, r, c){
     circ.setAttribute("cy", y);
     circ.setAttribute("r", r);
     circ.setAttribute("class", "draggable");
+    circ.setAttribute("pos_x", pos_x);
+    circ.setAttribute("pos_y", pos_y);
+    circ.setAttribute("color_num", color_num);
     
     circ.style.fill = c;
     
