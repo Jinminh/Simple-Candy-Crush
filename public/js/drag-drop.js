@@ -168,12 +168,13 @@ function stop_move(event){
         switched_circle = undefined;
         
         remove_circles(final_rm_list);
+        console.log(JSON.stringify(final_rm_list));
     }
     final_rm_list = [];
     new_cx = 0;
     new_cy = 0;
     mouseDown = false;
-    console.log(game_array);
+//     console.log(game_array);
 }
 
 

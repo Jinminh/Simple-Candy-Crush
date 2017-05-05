@@ -29,9 +29,11 @@ function remove_circles(temp_list){
                 circ_x = start_x+j;
                 circle = $('.draggable[pos_x="'+circ_x+'"][pos_y="'+start_y+'"]').get(0);
                 game_array[start_y][circ_x] = 0;              
-            }else{
+            }
+            if(temp_list[i].direction === 'y'){
                 circ_y = start_y+j;
-                game_array[start_x][circ_y] = 0;
+                circle = $('.draggable[pos_x="'+start_x+'"][pos_y="'+circ_y+'"]').get(0);
+                game_array[circ_y][start_x] = 0;
             }
             if(!list_contains(circle_list, circle))
                 circle_list.push(circle);
