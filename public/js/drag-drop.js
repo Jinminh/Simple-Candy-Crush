@@ -7,10 +7,15 @@ var switched_circle;
 var original_cx, original_cy, original_pos_x, original_pos_y;
 
 var new_cx = 0, new_cy = 0, new_pos_x = 0, new_pos_y = 0; 
+var final_rm_list = [];
+
+
 
 function move_circle(target, x, y, item, direction){  
+    final_rm_list = [];
     if(!stay)
         return;
+    
     var cx = item.attr('cx');
     var cy = item.attr('cy');
 
@@ -75,7 +80,7 @@ function final_move(target, x, y, pos_x, pos_y, item){
     var is_switchable = temp_arr[0];
     var rm_circle_list = temp_arr[1];
     
-    console.log("im temp_arr>>>>", JSON.stringify(rm_circle_list));
+//     console.log("im temp_arr>>>>", JSON.stringify(rm_circle_list));
     
     
     if(!is_switchable){
@@ -104,16 +109,14 @@ function final_move(target, x, y, pos_x, pos_y, item){
     switched_circle.setAttribute('pos_x', original_pos_x);
     switched_circle.setAttribute('pos_y', original_pos_y);
     
-    console.log('sw>>>>>>>>',$(switched_circle).attr('cx'), $(switched_circle).attr('cy'));
-    
     switched_circle.style.webkitTransform = switched_circle.style.transform =
     'translate(' + 0 + 'px, ' + 0 + 'px)';
     
 //     target.style.webkitTransform = target.style.transform =
 //     'translate(' + 0 + 'px, ' + 0 + 'px)';
 //     switched_circle = undefined;
-    remove_circles(rm_circle_list);
-        
+//     remove_circles(rm_circle_list);
+    final_rm_list = rm_circle_list;
     
     stay = false;
         
@@ -155,16 +158,22 @@ function stop_move(event){
         target.setAttribute('cx', new_cx);
         target.setAttribute('cy', new_cy);
         
+        
+//         console.log('switched_circle>>>>>', switched_circle);
+                    
         switched_circle.setAttribute('cx', original_cx);
         switched_circle.setAttribute('cy', original_cy);
         switched_circle.setAttribute('pos_x', original_pos_x);
         switched_circle.setAttribute('pos_y', original_pos_y);
         switched_circle = undefined;
         
-        new_cx = 0;
-        new_cy = 0;
-    }   
+        remove_circles(final_rm_list);
+    }
+    final_rm_list = [];
+    new_cx = 0;
+    new_cy = 0;
     mouseDown = false;
+    console.log(game_array);
 }
 
 
