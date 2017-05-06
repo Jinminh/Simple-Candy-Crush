@@ -49,6 +49,19 @@ function remove_circles(temp_list){
 //     } 
 }
 
+function falling_down(){
+    var str;
+    for(var i=0; i<10; i++){
+        str = '';
+        for(var j=0; j<10; j++){
+            str += game_array[j][i];
+        }
+        console.log(str);
+    }
+}
+
+
+
 
 
 

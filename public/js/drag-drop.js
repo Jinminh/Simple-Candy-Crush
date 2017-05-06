@@ -169,6 +169,7 @@ function stop_move(event){
         
         remove_circles(final_rm_list);
         console.log(JSON.stringify(final_rm_list));
+        falling_down();
     }
     final_rm_list = [];
     new_cx = 0;
