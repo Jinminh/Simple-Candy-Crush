@@ -49,15 +49,45 @@ function remove_circles(temp_list){
 //     } 
 }
 
+function move_falling_circles(x, y){
+    var circle;
+    var prev_cy, prev_pos_y;
+    for(var i=y; i>0; i--){
+        game_array[i][x] = game_array[i-1][x];
+        circle = $('.draggable[pos_x="'+x+'"][pos_y="'+(i-1)+'"]').get(0);
+        console.log('x, y', x, (i-1));
+        console.log(circle);
+        
+        
+        prev_cy = parseFloat($(circle).attr('cy'));
+        prev_pos_y = parseFloat($(circle).attr('pos_y'));
+        console.log('cy, pos_y', prev_cy, prev_pos_y);
+       
+        $(circle).attr('cy', prev_cy+75);
+        $(circle).attr('posy', prev_pos_y+1);
+        
+        $("svg").append(circle);
+        
+    }
+    game_array[0][x] = 9;
+}
+
 function falling_down(){
     var str;
+//     var falling_circle_list;
     for(var i=0; i<10; i++){
-        str = '';
+//         str = '';
         for(var j=0; j<10; j++){
-            str += game_array[j][i];
+//             str += game_array[j][i];
+            if(game_array[j][i] === 0){
+//                 console.log('im 0 i, j',i, j );
+                move_falling_circles(i, j);
+            }
+            
         }
-        console.log(str);
+//         console.log(str);
     }
+//     print_arr();
 }
 
 
