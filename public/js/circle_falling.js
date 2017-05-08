@@ -85,7 +85,7 @@ function create_new_circles(x, num){
         pos_y = num-1-i;
         circle = makeCircle(cx, cy, 33.75, color, pos_x, pos_y, color_num);
         $('svg').append(circle);
-//         new_circle_falling(circle, pos_y);
+        new_circle_falling(circle, pos_y);
     }
 }
 
