@@ -11,6 +11,21 @@ var game_array = [
                    [0,0,0,0,0,0,0,0,0,0]
                 ];
 
+function basic_rand_color_generator(){
+    var color_num = Math.floor(Math.random() * 5) + 1;
+    switch(color_num){
+        case 1:
+            return ["#ea6912", 1];
+        case 2:
+            return ["#1261ea", 2];
+        case 3:
+            return ["#e00b2b", 3];
+        case 4:
+            return ["#05c42b", 4];
+        case 5:
+            return ["#c405c4", 5];
+    }
+}
 
 function rand_color_generator(x, y){
     var color_num;

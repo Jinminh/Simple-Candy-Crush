@@ -49,27 +49,55 @@ function remove_circles(temp_list){
 //     } 
 }
 
+// function fill
+
 function move_falling_circles(x, y){
     var circle;
     var prev_cy, prev_pos_y;
     for(var i=y; i>0; i--){
         game_array[i][x] = game_array[i-1][x];
         circle = $('.draggable[pos_x="'+x+'"][pos_y="'+(i-1)+'"]').get(0);
-        console.log('x, y', x, (i-1));
-        console.log(circle);
-        
+//         console.log('x, y', x, (i-1));
+//         console.log($(circle)[0]);      
         
         prev_cy = parseFloat($(circle).attr('cy'));
         prev_pos_y = parseFloat($(circle).attr('pos_y'));
         console.log('cy, pos_y', prev_cy, prev_pos_y);
-       
-        $(circle).attr('cy', prev_cy+75);
+
+        
+//         var myFunc = function(i) {
+//             $(circle)[0].setAttribute('cy', prev_cy+i);
+            
+//             if(i === 75){
+//                 console.log('im myFunc ', $(circle)[0]);
+//                 return;
+//             }
+
+//             setTimeout(function() {
+//                 myFunc(i + 1);
+//             }, 3);
+//         }
+        
+//         myFunc(0);
+        
+        $(circle).attr('cy', prev_cy+75); 
         $(circle).attr('posy', prev_pos_y+1);
         
         $("svg").append(circle);
         
     }
+    
+//     var cy = 37.5;
+//     var cx = 50 + x*100;
+//     var temp_color = basic_rand_color_generator();
+//     var color = temp_color[0];
+//     var color_num = temp_color[1];  
+    
     game_array[0][x] = 9;
+    
+//     console.log('im doing when 0 x, y',  x, 0);
+    
+//     $('svg').append(makeCircle(cx, cy, 33.75, color, cx, cy, color_num)); 
 }
 
 function falling_down(){
@@ -87,7 +115,7 @@ function falling_down(){
         }
 //         console.log(str);
     }
-//     print_arr();
+    print_arr();
 }
 
 

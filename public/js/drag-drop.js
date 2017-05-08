@@ -85,7 +85,7 @@ function final_move(target, x, y, pos_x, pos_y, item){
     
     if(!is_switchable){
         console.log('not switchable!!!');
-        target.style.webkitTransform = switched_circle.style.transform =
+        target.style.webkitTransform = target.style.transform =
                                 'translate(' + 0 + 'px, ' + 0 + 'px)';
         switched_circle.style.webkitTransform = switched_circle.style.transform =
                                 'translate(' + 0 + 'px, ' + 0 + 'px)';
@@ -229,6 +229,14 @@ $(document).ready(function(){
         $(this).hide();
         var p = $("#game-panel");
         drawGrid(p);
+        var rm_list = check_colors_in_row(game_array);
+        
+        if(rm_list.length !== 0){
+            console.log('not 0>>>>>>>>>>>>');
+            remove_circles(rm_list);
+            falling_down();
+        }
+        
         attachEvent();
     });  
 });
