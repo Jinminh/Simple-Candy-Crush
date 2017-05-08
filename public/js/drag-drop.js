@@ -43,6 +43,7 @@ function move_circle(target, x, y, item, direction){
     
 //     console.log('x: '+ temp_x +' y: '+temp_y + ' stayed: '+ stay);
     switched_circle = $('.draggable[cx="'+temp_x+'"][cy="'+temp_y+'"]').get(0);
+        
     var switched_cx = $(switched_circle).attr('cx');
     var switched_cy = $(switched_circle).attr('cy');
     var switched_pos_x = $(switched_circle).attr('pos_x'); 
