@@ -14,8 +14,8 @@ localhost:8088
 ```
 
 ## Demo
-![Original image](demo_img/start_page.jpg?raw=true)
+![Original image](demo_img/start_page.JPG?raw=true)
 original image
 
-![Final image](demo_img/game_board.jpg?raw=true)
+![Final image](demo_img/game_board.JPG?raw=true)
 final image
