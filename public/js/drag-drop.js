@@ -12,38 +12,39 @@ var final_rm_list = [];
 
 
 function move_circle(target, x, y, item, direction){  
-    final_rm_list = [];
+   // final_rm_list = [];
     if(!stay)
         return;
     
     var cx = item.attr('cx');
     var cy = item.attr('cy');
 
-    var temp_x = parseFloat(cx);
-    var temp_y = parseFloat(cy);
+    var temp_pos_x = parseFloat(item.attr('pos_x'));
+    var temp_pos_y = parseFloat(item.attr('pos_y'));
     
     if(x !== 0){
         if(direction === 'right'){
-            temp_x = temp_x + 100;
+            temp_pos_x += 1;
         }
         if(direction === 'left'){
-            temp_x = temp_x - 100;
+            temp_pos_x -= 1;
         }
     }
     if(y !== 0){
         if(direction === 'down'){
-            temp_y = temp_y + 75;
-//             console.log('im down!!!');
+            temp_pos_y += 1;
         }
         if(direction === 'up'){
-            temp_y = temp_y - 75;
-//             console.log('im up!!!');
+            temp_pos_y -= 1;
         }
     }
     
 //     console.log('x: '+ temp_x +' y: '+temp_y + ' stayed: '+ stay);
-    switched_circle = $('.draggable[cx="'+temp_x+'"][cy="'+temp_y+'"]').get(0);
+    switched_circle = $('.draggable[pos_x="'+temp_pos_x+'"][pos_y="'+temp_pos_y+'"]').get(0);
         
+	//console.log('im switched>>>',switched_circle);
+		
+		
     var switched_cx = $(switched_circle).attr('cx');
     var switched_cy = $(switched_circle).attr('cy');
     var switched_pos_x = $(switched_circle).attr('pos_x'); 
@@ -160,7 +161,7 @@ function stop_move(event){
         target.setAttribute('cy', new_cy);
         
         
-//         console.log('switched_circle>>>>>', switched_circle);
+        // console.log('switched_circle>>>>>', switched_circle);
                     
         switched_circle.setAttribute('cx', original_cx);
         switched_circle.setAttribute('cy', original_cy);
@@ -190,11 +191,13 @@ function attachEvent(){
         original_cy = parseFloat(event.target.getAttribute('cy'));
         original_pos_x = parseFloat(event.target.getAttribute('pos_x'));
         original_pos_y = parseFloat(event.target.getAttribute('pos_y'));
-//             console.log(original_cx, original_cy);
+             //console.log(original_cx, original_cy);
         $(this).mousemove(function(event){  
             var item = $(this);
             if(mouseDown){
                 var target = event.target;
+				//console.log('target>>>>>', target);
+				
                 var x_distance = event.pageX - x_initial;
                 var y_distance = event.pageY - y_initial;
                 var flags = check_edge(original_cx, original_cy, x_distance, y_distance);
@@ -233,7 +236,7 @@ $(document).ready(function(){
         var rm_list = check_colors_in_row(game_array);
         
         if(rm_list.length !== 0){
-            console.log('not 0>>>>>>>>>>>>');
+            //console.log('not 0>>>>>>>>>>>>');
             remove_circles(rm_list);
             falling_down();
         }
