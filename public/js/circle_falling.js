@@ -81,6 +81,7 @@ function create_new_circles(x, num){
         new_circle_falling(circle, pos_y);
         game_array[pos_y][pos_x] = color_num;
     }
+	attachEvent();
 }
 
 function check_falling_distance(arr, y){
@@ -94,102 +95,118 @@ function check_falling_distance(arr, y){
 }
 
 
+function falling_together(falling_list){
+// 	for(var i=0; i<falling_list.length; i++){
+// 		console.log('circ>>>>', $(falling_list[i].circ).attr('cy'), 'falling_dis>>>', falling_list[i].falling_dis);
+// 	}
+	
+	
+	var falling_func = function(cnt ,falling_list){	
+		for(var i=0; i<falling_list.length; i++){
+			var prev_cy = parseFloat($(falling_list[i].circ).attr('cy'));
+			var circ = falling_list[i].circ;
+			var falling_dis = falling_list[i].falling_dis;
+			
+// 			console.log('im circ>>>>',circ);
+			
+// 			console.log('cy>>>', $(circ).attr('cy'), ' falling_dis>>>', falling_dis, ' cnt>>>', cnt);
+			
+			/*if the circle reaches the falling distance, remove it*/
+			if(cnt >= falling_dis){
+				var prev_pos_y = parseFloat($(circ).attr('pos_y'));
+				var cy = parseFloat($(circ).attr('cy'));
+				$(circ).attr('pos_y', prev_pos_y+(falling_dis/75));
+// 				$(circ).attr('cy', (cy-1));
+// 				console.log('im cy>>>', cy);
+				
+				var pos_x = parseFloat($(circ).attr('pos_x'));
+				var pos_y = parseFloat($(circ).attr('pos_y'));
+				var color_num = parseFloat($(circ).attr('color_num'));
+				game_array[pos_y][pos_x] = color_num;
+				game_array[prev_pos_y][pos_x] = 0;
+				falling_list.splice(i, 1);
+				continue;
+			}
+			
+			/*falling by 1*/
+			$(circ).attr('cy', prev_cy+1);
+		}
+		
+		if(falling_list.length === 0){
+			console.log('falling list is empty!!!');
+			return
+		}
+		setTimeout(function(){
+			falling_func(cnt + 1, falling_list);
+		}, 3);
+	}
+	falling_func(0, falling_list);
+}
+
+
 function move_falling_circles(list){
     var len = list.length;
     var x = list[0].x;
 // 	var start_y;
     var start_y = list[0].y-1;
     var circle;
-//     var falling_distance = 75*len;
     var falling_distance;
 	
-// 	console.log('list>>>>',JSON.stringify(list));
-	
 	var y_arr = [];
+	var falling_circ_arr = [];
 	
 	for(var cnt=0; cnt<len; cnt++){
 		y_arr.push(list[cnt].y);
 	}
-	console.log('y_arr>>>>',JSON.stringify(y_arr));
 	
+	/*traverse the whole column*/
 	for(var i=0; i<10; i++){
 		
+		/*if there is no circle in this grid, skip it*/
 		if(game_array[i][x] === 0){	
 			console.log('empty>>>x, y',x,i);
 			continue;
 		}
+		
 		falling_distance = check_falling_distance(y_arr, i);
+		
+		/*means there is no more empty grid in this column*/
 		if(falling_distance === 0){
-// 			console.log('0?????????????????????');
 			break;
 		}
-		
-		console.log('i>>>',i, ' color>>>',game_array[i][x],' falling_distance>>>>',falling_distance);
 		
 		circle = $('.draggable[pos_x="'+x+'"][pos_y="'+i+'"]').get(0);
 		$("svg").append(circle);
         var prev_cy = parseFloat($(circle).attr('cy'));
+		falling_circ_arr.push({circ: circle, falling_dis: falling_distance});
+		
 		
 		//falling effect
-		var myFunc = function(k, circ, prev_cy, falling_dis){
-			$(circ).attr('cy', prev_cy+k);
-// 			console.log('kkkk>>>', k,' falling_distance', falling_dis);
-            if(k == falling_dis){
-				console.log('should return!!!');
-				
-				var prev_pos_y = parseFloat($(circ).attr('pos_y'));
-				$(circ).attr('pos_y', prev_pos_y+(falling_dis/75));
-				var pos_x = parseFloat($(circ).attr('pos_x'));
-				var pos_y = parseFloat($(circ).attr('pos_y'));
-				var color_num = parseFloat($(circ).attr('color_num'));
+// 		var myFunc = function(k, circ, prev_cy, falling_dis){
+// 			$(circ).attr('cy', prev_cy+k);
+			
+// // 			console.log('kkkk>>>', k,' falling_distance', falling_dis);
+//             if(k == falling_dis){
+// // 				console.log('should return!!!');
+// 				var prev_pos_y = parseFloat($(circ).attr('pos_y'));
+// 				$(circ).attr('pos_y', prev_pos_y+(falling_dis/75));
+// 				var pos_x = parseFloat($(circ).attr('pos_x'));
+// 				var pos_y = parseFloat($(circ).attr('pos_y'));
+// 				var color_num = parseFloat($(circ).attr('color_num'));
 
-				game_array[pos_y][pos_x] = color_num;
-				game_array[prev_pos_y][pos_x] = 0;
+// 				game_array[pos_y][pos_x] = color_num;
+// 				game_array[prev_pos_y][pos_x] = 0;
 	
-                return;
-            }
-            setTimeout(function() {
-                myFunc(k + 1, circ, prev_cy, falling_dis);
-            }, 3);
-        }  
-        myFunc(0, circle, prev_cy, falling_distance);
-		
-
-	}
-	
-	
-	
-    /*traverse from the first element above the empty location*/
-//     for(var i = start_y; i>=0; i--){  
-//         circle = $('.draggable[pos_x="'+x+'"][pos_y="'+i+'"]').get(0);       
-//         $("svg").append(circle);
-//         var prev_cy = parseFloat($(circle).attr('cy'));  
-        
-		
-//         //falling effect
-//         var myFunc = function(i, circ, prev_cy){
-//             $(circ).attr('cy', prev_cy+i);
-            
-//             if(i === falling_distance){
 //                 return;
 //             }
 //             setTimeout(function() {
-//                 myFunc(i + 1, circ, prev_cy);
+//                 myFunc(k + 1, circ, prev_cy, falling_dis);
 //             }, 3);
 //         }  
-//         myFunc(0, circle, prev_cy);
-        
-        
-//         var prev_pos_y = parseFloat($(circle).attr('pos_y'));
-//         $(circle).attr('pos_y', prev_pos_y+len);
-//         var pos_x = parseFloat($(circle).attr('pos_x'));
-//         var pos_y = parseFloat($(circle).attr('pos_y'));
-//         var color_num = parseFloat($(circle).attr('color_num'));
-        
-//         game_array[pos_y][pos_x] = color_num;
-//         game_array[prev_pos_y][pos_x] = 0;
-//     }
-	
+//         myFunc(0, circle, prev_cy, falling_distance);
+	}
+// 	console.log(JSON.stringify(falling_circ_arr));
+	falling_together(falling_circ_arr);
 	
     create_new_circles(x, len);
 }
