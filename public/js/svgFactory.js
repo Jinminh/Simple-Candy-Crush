@@ -84,8 +84,9 @@ function makeCircle(x, y, r, c, pos_x, pos_y, color_num){
     circ.setAttribute("pos_x", pos_x);
     circ.setAttribute("pos_y", pos_y);
     circ.setAttribute("color_num", color_num);
-    
+    var point = r/3;
     circ.style.fill = c;
+    circ.style.background = 'radial-gradient(circle at '+point+' px '+point+'px, '+c+', #000)'
     
     return circ;
 }

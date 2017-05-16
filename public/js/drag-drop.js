@@ -3,16 +3,17 @@ var x_initial, y_initial;
 var bool_move = true;
 var stay = true;
 var switched_circle;
-
+var is_started = false;
 var original_cx, original_cy, original_pos_x, original_pos_y;
 
 var new_cx = 0, new_cy = 0, new_pos_x = 0, new_pos_y = 0; 
 var final_rm_list = [];
 
-
-
 function move_circle(target, x, y, item, direction){  
    // final_rm_list = [];
+// 	console.log('im in move_circle>>>');
+// 	print_arr();
+	
     if(!stay)
         return;
     
@@ -171,6 +172,7 @@ function stop_move(event){
         
         remove_circles(final_rm_list);
         console.log(JSON.stringify(final_rm_list));
+		
         falling_down();
     }
     final_rm_list = [];
@@ -226,21 +228,3 @@ function attachEvent(){
     $('.draggable').mouseleave(stop_move);
 }
 
-$(document).ready(function(){
-    
-    var $item = $("<div class = 'item-grid'></div>");
-    $("#start-btn").click(function(){
-        $(this).hide();
-        var p = $("#game-panel");
-        drawGrid(p);
-        var rm_list = check_colors_in_row(game_array);
-        
-        if(rm_list.length !== 0){
-            //console.log('not 0>>>>>>>>>>>>');
-            remove_circles(rm_list);
-            falling_down();
-        }
-        
-        attachEvent();
-    });  
-});

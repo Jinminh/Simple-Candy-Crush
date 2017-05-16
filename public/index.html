@@ -8,6 +8,7 @@
         
         <script src="//cdn.jsdelivr.net/interact.js/1.2.8/interact.min.js"></script>
         
+        <script type="text/javascript" src="js/document_ready.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
         <script type="text/javascript" src="js/svgFactory.js"></script>
         <script type="text/javascript" src="js/drag-drop.js"></script>
@@ -18,16 +19,27 @@
     </head>
 
     <body>
-<!--         <div class = "outter"> -->
+        <div>
             <a href="#game-panel" id ="start-btn" class="btn" role = "button" data-toggle = "collapse">Start</a>
-            <div ID = "game-btns" class = "g-btns">
-                <a href="#" ID ="gb" class="ingame-btn">
-                    <span class="glyphicon glyphicon-repeat"></span>
-                </a>
-            </div>
-            <div ID = "game-panel" class = "collapse"> 
-            </div>    
-<!--         </div> -->
+            <button ID="restore-btn" class="btn">Restore</button>
+            <div class="dropdown-content">
+                <ul>
+                    <li class = 'link'>Hello World!</a>
+                    <li class = 'link'>Hello World1!</a>
+                </ul>
+            </div> 
 
+            <div ID = "game-btns" class = "g-btns">
+                <a href="#" class="btn game-btn" ID="restart-btn">
+                  <span class="glyphicon glyphicon-repeat"></span>
+                </a>
+                
+                <a href="#" class="btn game-btn" ID="save-btn">
+                  <span class="glyphicon glyphicon-download-alt"></span>
+                </a>     
+            </div>
+
+            <div ID = "game-panel" class = "collapse"></div>
+        </div>
     </body>    
 </html>

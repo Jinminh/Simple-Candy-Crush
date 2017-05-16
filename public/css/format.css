@@ -10,6 +10,50 @@ circle{
 	z-index:10;
 }
 
+#start-btn{
+	left: 45%;
+    top: 40%;
+	padding: 10px 60px;
+}
+
+#restore-btn{
+	left: 45%;
+    top: 50%;
+	padding: 10px 36px;
+}
+
+.dropdown-content{
+	display: none;
+	position: fixed;
+    top: 58%;
+    left: 44.5%;
+/* 	text-align: center; */
+/*     transform: translate(-50%, -43%); */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 14px 12px;
+    z-index: 1;
+}
+
+.link{
+	transition: 0.4s;
+	color: #55595e;
+	font: italic 20px Georgia, sans-serif;
+  	padding: 0 10px;
+  	margin: 10px 0px 10px 10px;
+}
+
+.link:hover {
+	background-color: #ffffff;
+	color: #1453ba;
+	padding: 12px 10px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+ul{
+  list-style-type: none;
+}
 
 .btn{
     display: inline-block;
@@ -17,9 +61,7 @@ circle{
     text-align: center;
 	color: #F8F8FF;
 	background: #59F225;
-    left: 45%;
-    top: 45%;
-    padding: 10px 60px;
+    
     font: italic 40px Georgia, sans-serif;
 	text-shadow: 1px 1px 1px rgba(255,255,255, .12);
 	
@@ -57,65 +99,38 @@ circle{
     background: -webkit-linear-gradient(top, #7DED6C 10%,#20A90C 90%);
 }
 
-.ingame-btn{
-    display: inline-block;
-    position: absolute;
-    text-align: center;
-	color: #F8F8FF;
-	background: #59F225;
-/*     left: 45%;
-    top: 45%; */
-    padding: 10px 60px;
-    font: italic 20px Georgia, sans-serif;
-	text-shadow: 1px 1px 1px rgba(255,255,255, .12);
 
-	bottom: 20px;
-	outline: none;
-    
-    
-	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-	border-radius: 50%;
-
-	-webkit-box-shadow: 1px 1px 1px rgba(0,0,0, .29), inset 1px 1px 1px rgba(255,255,255, .44);
-	-moz-box-shadow: 1px 1px 1px rgba(0,0,0, .29), inset 1px 1px 1px rgba(255,255,255, .44);
-	box-shadow: 1px 1px 1px rgba(0,0,0, .29), inset 1px 1px 1px rgba(255,255,255, .44);
-
-	-webkit-transition: all 0.15s ease;
-	-moz-transition: all 0.15s ease;
-	-o-transition: all 0.15s ease;
-	-ms-transition: all 0.15s ease;
-	transition: all 0.15s ease;
-    
-    background: -webkit-linear-gradient(top, #AFFD87 10%,#43ED18 90%); 
-}
-
-.ingame-btn:hover {
-	-webkit-box-shadow: 3px 3px 3px 3px #CFD4CE; 
- 	-moz-box-shadow: 3px 3px 3px 3px #CFD4CE;
-	box-shadow: 3px 3px 3px 3px #CFD4CE;
+.game-btn:hover{
+	-webkit-box-shadow: 1px 1px 1px 1px #CFD4CE; 
+ 	-moz-box-shadow: 1px 1px 1px 1px #CFD4CE;
+	box-shadow: 1px 1px 1px 1px #CFD4CE;
     color: #BECCBB;
+} 
+
+
+.game-btn: active{
+	-webkit-box-shadow: 1px 1px 1px 1px #CFD4CE; 
+ 	-moz-box-shadow: 1px 1px 1px 1px #CFD4CE;
+	box-shadow: 1px 1px 1px 1px #CFD4CE;
+    color: #BECCBB;
+} 
+
+#restart-btn{
+	top: 75%;
+    left: 4%;
+/* 	padding: 0px 2px 2px; */
+	margin: 10px;
 }
 
-.ingame-btn:active {
-	-webkit-box-shadow: 3px 3px 3px 3px #CFD4CE; 
- 	-moz-box-shadow: 3px 3px 3px 3px #CFD4CE;
-	box-shadow: 3px 3px 3px 3px #CFD4CE;
-    color: #E9F79C;
-    background: -webkit-linear-gradient(top, #7DED6C 10%,#20A90C 90%);
+#save-btn{
+	top: 75%;
+    left: 10%;
+	margin: 10px;
 }
-
 
 .g-btns{
-	width:15%;
-	height:900px;
-/* 	background: #000; */
-	float: left;
-	position: relative;
-	margin: 10px 20px 10px 20px;
 	display: none;
 }
-
 
 #game-panel {
 	right: 120px;
@@ -125,7 +140,7 @@ circle{
 /* 	padding: 8px; */
 	position: fixed;
     top: 48%;
-    left: 50%;
+    left: 55%;
     transform: translate(-50%, -50%);
 	background: #2c4368;
 	opacity: 0.9;
