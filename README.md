@@ -19,3 +19,5 @@ start_page
 
 ![Final image](demo_img/game_board.JPG?raw=true)
 game_board
+
+![Game image](demo_img/candy.gif?raw=true)
