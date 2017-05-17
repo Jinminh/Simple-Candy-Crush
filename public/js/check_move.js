@@ -8,6 +8,7 @@ function print_arr(){
         }
         console.log(string);
     }
+    console.log('');
 }
 
 /*traverse the whole matrix to check if there is any 3 in row*/

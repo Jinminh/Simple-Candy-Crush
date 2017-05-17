@@ -10,6 +10,7 @@ $(document).ready(function(){
 	});
 	
     $('#restore-btn').click(function(){
+		get_state();
 		$('.dropdown-content').css('display', 'inline-block');
 	});
 	
@@ -25,7 +26,7 @@ $(document).ready(function(){
 		if($(window).width() > 1300)
 			$('.g-btns').show();
 		
-        $(this).hide();
+        $('.start-panel').hide();
         var p = $("#game-panel");
         drawGrid(p);
         var rm_list = check_colors_in_row(game_array);
@@ -40,5 +41,11 @@ $(document).ready(function(){
 	$('#restart-btn').click(function() {
 		location.reload();
 	});
-
+    
+    $('#save-btn').click(save_state);    
 });
+
+
+
+
+

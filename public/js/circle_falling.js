@@ -65,7 +65,7 @@ function new_circle_falling(circle, pos_y, num){
         }
         setTimeout(function() {
             myFunc(i + 1, circ, pos_y);
-        }, 3);
+        }, 1);
     }  
     myFunc(0, circle, pos_y);
 	
@@ -112,16 +112,16 @@ function update_array(rm_list){
 				curr_x = start_x;
 				curr_y = start_y+j;
 			}
-			console.log('curr>>>', curr_x, curr_y);
+// 			console.log('curr>>>', curr_x, curr_y);
 			
 			circ = $('.draggable[pos_x="'+curr_x+'"][pos_y="'+curr_y+'"]').get(0);
 			
-			console.log('circ>>>>', circ);
-			console.log('unmove>>>',$('.draggable[pos_x="'+9+'"][pos_y="'+9+'"]').get(0));
+// 			console.log('circ>>>>', circ);
+// 			console.log('unmove>>>',$('.draggable[pos_x="'+9+'"][pos_y="'+9+'"]').get(0));
 			
 			color_num = parseFloat($(circ).attr('color_num'));
 			game_array[curr_y][curr_x] = color_num;
-			console.log(game_array[curr_y][curr_x]);
+// 			console.log(game_array[curr_y][curr_x]);
 			
 			
 		}
@@ -180,36 +180,49 @@ function falling_together(falling_list){
 			$(circ).attr('cy', prev_cy+1);
 		}
 		
-		console.log('falling_list>>>>',JSON.stringify(falling_list));
+// 		console.log('falling_list>>>>',JSON.stringify(falling_list));
 		
 		if(falling_list.length === 0){			
 			falling_func_count++;
+			console.log("falling_cout>>>", falling_func_count, " count>>>", count);
+			
 			if(falling_func_count >= count){
 				count = 0;
-				falling_func_count = 0;
-				
-				var rm_list = check_colors_in_row(game_array);
-				console.log(JSON.stringify(rm_list));
-				
-				if(rm_list.length !== 0){
-					if(rm_list[0].color === 0){
-						console.log('i fount some 0000000');
-						setTimeout(function(){
-							update_array(rm_list);
-						}, 1000);
-						print_arr();
-						return;
+				falling_func_count = 0;						
+				setTimeout(function(){
+					var rm_list = check_colors_in_row(game_array);
+					console.log('first print>>>>>');
+					print_arr();
+					if(rm_list.length !== 0){
+// 						print_arr();
+						remove_circles(rm_list);
+						falling_down();		
 					}
-					console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-					remove_circles(rm_list);
-            		falling_down();				
-				}
+				}, 200);
+				
+				
+				
+// 				if(rm_list.length !== 0){
+// 					if(rm_list[0].color === 0){
+// 						console.log('i fount some 0000000');
+// 						setTimeout(function(){
+// 							update_array(rm_list);
+// 							print_arr();
+// 						}, 1000);
+// 						return;
+// 					}
+// 					console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+// 					remove_circles(rm_list);
+//             		falling_down();				
+// 				}
 			}
+			console.log('last>>>>');
+			print_arr();
 			return;
 		}
 		setTimeout(function(){
 			falling_func(cnt + 1, falling_list);
-		}, 2);
+		}, 1);
 	}
 	falling_func(0, falling_list);
 }
