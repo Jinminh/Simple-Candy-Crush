@@ -91,6 +91,7 @@ function create_new_circles(x, num){
 // 		console.log('(',pos_x, ',', pos_y, ')', color_num);
 		
         game_array[pos_y][pos_x] = color_num;
+// 		console.log(' mightbe me here!!!!');
     }
 	attachEvent();
 }
@@ -112,13 +113,9 @@ function update_array(rm_list){
 				curr_x = start_x;
 				curr_y = start_y+j;
 			}
-// 			console.log('curr>>>', curr_x, curr_y);
 			
 			circ = $('.draggable[pos_x="'+curr_x+'"][pos_y="'+curr_y+'"]').get(0);
-			
-// 			console.log('circ>>>>', circ);
-// 			console.log('unmove>>>',$('.draggable[pos_x="'+9+'"][pos_y="'+9+'"]').get(0));
-			
+
 			color_num = parseFloat($(circ).attr('color_num'));
 			game_array[curr_y][curr_x] = color_num;
 // 			console.log(game_array[curr_y][curr_x]);
@@ -126,19 +123,6 @@ function update_array(rm_list){
 			
 		}
 	}
-// 	var list = check_colors_in_row(game_array);
-// 	if(list.length !== 0){
-// 		if(list[0].color === 0){
-// 			console.log('i fount some 0000000');
-// 			setTimeout(function(){
-// 				update_array(rm_list);
-// 			}, 800);
-// 			print_arr();
-// 			return;
-// 		}
-// 		remove_circles(list);
-// 		falling_down();				
-// 	}
 }
 
 function check_falling_distance(arr, y){
@@ -152,11 +136,7 @@ function check_falling_distance(arr, y){
 }
 
 
-function falling_together(falling_list){
-// 	for(var i=0; i<falling_list.length; i++){
-// 		console.log('circ>>>>', $(falling_list[i].circ).attr('cy'), 'falling_dis>>>', falling_list[i].falling_dis);
-// 	}
-		
+function falling_together(falling_list){		
 	var falling_func = function(cnt ,falling_list){	
 		for(var i=0; i<falling_list.length; i++){
 			var prev_cy = parseFloat($(falling_list[i].circ).attr('cy'));
@@ -173,6 +153,7 @@ function falling_together(falling_list){
 				var color_num = parseFloat($(circ).attr('color_num'));
 				game_array[pos_y][pos_x] = color_num;
 				falling_list.splice(i, 1);
+// 				console.log(">>>>>>>>>>>>>last print>>>>>>>>>>>>>");
 				continue;
 			}
 			
@@ -188,36 +169,36 @@ function falling_together(falling_list){
 			
 			if(falling_func_count >= count){
 				count = 0;
-				falling_func_count = 0;						
-				setTimeout(function(){
-					var rm_list = check_colors_in_row(game_array);
-					console.log('first print>>>>>');
-					print_arr();
-					if(rm_list.length !== 0){
-// 						print_arr();
-						remove_circles(rm_list);
-						falling_down();		
-					}
-				}, 200);
+				falling_func_count = 0;	
 				
-				
-				
-// 				if(rm_list.length !== 0){
-// 					if(rm_list[0].color === 0){
-// 						console.log('i fount some 0000000');
-// 						setTimeout(function(){
-// 							update_array(rm_list);
-// 							print_arr();
-// 						}, 1000);
-// 						return;
+// 				setTimeout(function(){
+// 					var rm_list = check_colors_in_row(game_array);
+// 					console.log('first print>>>>>');
+// 					print_arr();
+// 					if(rm_list.length !== 0){
+// 						remove_circles(rm_list);
+// 						falling_down();		
 // 					}
-// 					console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-// 					remove_circles(rm_list);
-//             		falling_down();				
-// 				}
+// 				}, 150);
+				
+				
+				var rm_list = check_colors_in_row(game_array);
+				if(rm_list.length !== 0){
+					if(rm_list[0].color === 0){
+						console.log('i fount some 0000000');
+						setTimeout(function(){
+							update_array(rm_list);
+							print_arr();
+						},1000);
+						return;
+					}
+					console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+					remove_circles(rm_list);
+            		falling_down();				
+				}
 			}
-			console.log('last>>>>');
-			print_arr();
+// 			console.log('last>>>>');
+// 			print_arr();
 			return;
 		}
 		setTimeout(function(){

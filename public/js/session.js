@@ -2,45 +2,43 @@ function save_state(){
     var save = prompt("Please enter a name for this ");
     if(save !== null){
 		var obj = {name: save, board: game_array};
-        
-        var current_cookie = document.cookie;
-        
-        if(!current_cookie){
-            console.log('i shouldent be here>>>>>>>');
-            document.cookie = JSON.stringify(obj);
-            return;
-        }
-        
-//         console.log('obj>>>', JSON.stringify(obj));
-        
-        current_cookie += (';' +JSON.stringify(obj));
-        
-        console.log(current_cookie);
-        
-        document.cookie = current_cookie;
-        
-//         console.log(">>>>>>>obj>>>>>>>>>", JSON.stringify(obj));
-        
-//         document.cookie = JSON.stringify(obj);
-
-        console.log("cookie>>>>>", document.cookie);
-    }
+		var storage = localStorage.getItem("states");
+		var states_arr = [];
+		if(storage == null){	
+			states_arr.push(obj);
+		}else{
+			states_arr = JSON.parse(storage);
+			states_arr.push(obj);
+		}	
+		localStorage.setItem("states", JSON.stringify(states_arr));
+		alert('Current board is successfully saved!');
+		return;
+	}
 }
 
 function get_state(){
-	var state = (document.cookie).split(';');
-	var obj;
-    console.log(document.cookie);
-    
-    for(var i=0; i<state.length; i++){
-        obj = JSON.parse(state[i]);
-        $(".list").html('<li id="'+obj.name + '" class="link" data-toggle="collapse" data-target="#game-panel">'+obj.name+'</li>');
+	$(".list").html('');
+	var storage = localStorage.getItem("states");
+	if(storage == null){
+		return;
+	}
+	var states_arr = JSON.parse(storage);
+	
+	
+    var obj;
+    for(var i=0; i<states_arr.length; i++){
+        obj = states_arr[i];
+        $(".list").append('<li id="'+obj.name + '" class="link" data-toggle="collapse" data-target="#game-panel">'+obj.name+'</li>');
     }
     
+// 	var restore = restore_board(obj, states_arr);
+	
     $('.list li').click(function(){
+		console.log("list li clicked>>>>");
+		
         $('.start-panel').hide();
-        for(var j=0; j<state.length; j++){
-            obj = JSON.parse(state[j]);
+        for(var j=0; j<states_arr.length; j++){
+            obj = states_arr[j];
 //             console.log('im here>>>',obj, this.id);
             
             if(obj.name === this.id){
@@ -49,16 +47,38 @@ function get_state(){
                 var p =$("#game-panel");
                 drawGrid_1(p, obj.board);
                 attachEvent();
-                game_array = obj.board;
-                
+                game_array = obj.board;       
                 is_started = true;
                 if($(window).width() > 1300)
 			        $('.g-btns').show();
             }
         }
     });
+	
+	$('.list li').contextmenu(function(){
+		alert("right click");
+	})
 }
 
+function restore_board(obj, states_arr){
+        $('.start-panel').hide();
+        for(var j=0; j<states_arr.length; j++){
+            obj = states_arr[j];
+//             console.log('im here>>>',obj, this.id);
+            
+            if(obj.name === this.id){
+                console.log('table>>>>',JSON.stringify(obj.board));
+                
+                var p =$("#game-panel");
+                drawGrid_1(p, obj.board);
+                attachEvent();
+                game_array = obj.board;       
+                is_started = true;
+                if($(window).width() > 1300)
+			        $('.g-btns').show();
+            }
+        }
+    }
 
 
 function drawGrid_1(panel, board){
