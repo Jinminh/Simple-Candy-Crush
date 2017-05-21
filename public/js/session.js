@@ -1,3 +1,4 @@
+/*save currernt board*/
 function save_state(){
     var save = prompt("Please enter a name for this ");
     if(save !== null){
@@ -16,6 +17,7 @@ function save_state(){
 	}
 }
 
+/*restore saved board*/
 function get_state(){
 	$(".list").html('');
 	var storage = localStorage.getItem("states");
@@ -33,13 +35,13 @@ function get_state(){
     
 // 	var restore = restore_board(obj, states_arr);
 	
+	/*Draw board*/
     $('.list li').click(function(){
 		console.log("list li clicked>>>>");
 		
         $('.start-panel').hide();
         for(var j=0; j<states_arr.length; j++){
             obj = states_arr[j];
-//             console.log('im here>>>',obj, this.id);
             
             if(obj.name === this.id){
                 console.log('table>>>>',JSON.stringify(obj.board));
@@ -55,30 +57,41 @@ function get_state(){
         }
     });
 	
-	$('.list li').contextmenu(function(){
-		alert("right click");
-	})
+	var item_id;
+	
+	/*delete when right click*/
+	$('.list li').bind('contextmenu', function(e){
+		console.log('this>>>>>>>',$(this)[0].id);
+		item_id = $(this)[0].id;
+		e.preventDefault();
+	  	$("#right-click-menu").css("left",e.pageX);
+  		$("#right-click-menu").css("top",e.pageY);
+		$("#right-click-menu").fadeIn(200,startFocusOut(item_id, states_arr)); 
+	});
 }
 
-function restore_board(obj, states_arr){
-        $('.start-panel').hide();
-        for(var j=0; j<states_arr.length; j++){
-            obj = states_arr[j];
-//             console.log('im here>>>',obj, this.id);
-            
-            if(obj.name === this.id){
-                console.log('table>>>>',JSON.stringify(obj.board));
-                
-                var p =$("#game-panel");
-                drawGrid_1(p, obj.board);
-                attachEvent();
-                game_array = obj.board;       
-                is_started = true;
-                if($(window).width() > 1300)
-			        $('.g-btns').show();
-            }
-        }
-    }
+/*implementation of delete function*/
+function startFocusOut(item_id, states_arr){
+	$(document).on("click",function(){
+		$("#right-click-menu").hide();        
+		$(document).off("click");
+	});
+	
+	/*delete from DOM and the session store*/
+	$("#delete").click(function(){
+		$('#'+item_id).remove();
+		var obj;
+		for(var i=0; i<states_arr.length; i++){
+			obj = states_arr[i];
+			if(obj.name == item_id){
+				states_arr.splice(i, 1);
+				localStorage.setItem("states", JSON.stringify(states_arr));
+				return;
+			}
+		}
+	});
+}
+
 
 
 function drawGrid_1(panel, board){
