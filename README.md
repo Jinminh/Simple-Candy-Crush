@@ -15,9 +15,22 @@ localhost:8088
 
 ## Demo
 ![Original image](demo_img/start_page.JPG?raw=true)
-start_page
+Start page
 
 ![Final image](demo_img/game_board.JPG?raw=true)
-game_board
+Game board
 
 ![Game image](demo_img/candy.gif?raw=true)
+Game effect
+
+![Game image](demo_img/refresh.gif?raw=true)
+Restart game
+
+![Game image](demo_img/save_button.gif?raw=true)
+Save board
+
+![Game image](demo_img/restore.gif?raw=true)
+Restore board
+
+![Game image](demo_img/delete.gif?raw=true)
+Delete Archives
